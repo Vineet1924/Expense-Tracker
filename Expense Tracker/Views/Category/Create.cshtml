@@ -1,0 +1,47 @@
+﻿@model Expense_Tracker.Models.Category
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Category</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4" style="width:1000px;">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <div class='e-btn-group custom-rbt-group' style="width: 100%;">
+                    <input type="radio" id="radioExpense" name="Type" value="Expense" checked="@(Model.Type == "Expense")" style="width: 208px;" />
+                    <label class="e-btn" for="radioExpense" style="width:50%;">Expense</label>
+                    <input type="radio" id="radioIncome" name="Type" value="Income" checked="@(Model.Type == "Income")" style="width: 208px;" />
+                    <label class="e-btn" for="radioIncome" style="width:50%;">Income</label>
+                </div>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <ejs-textbox id="title" placeholder="Title" value="Title" ejs-for="Title" floatLabelType="Always"></ejs-textbox>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <ejs-textbox id="icon" placeholder="Icon" value="@Model.Icon" ejs-for="Icon" floatLabelType="Always"></ejs-textbox>
+                <span asp-validation-for="Icon" class="text-danger"></span>
+            </div>
+            <div class="mb-3" style="width:100%; display:flex">
+                <input type="submit" value="Create" class="btn btn-primary" style="width:50%;" />
+                <a asp-action="Index" style="width:50%; margin-left:10px;"><button type="button" class="btn-success" style="width:100%; border-radius: 5px; border: none; font-size: 17px; padding:9px"> View </button></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

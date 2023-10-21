@@ -1,0 +1,62 @@
+﻿@model Expense_Tracker.Models.Transaction
+
+@{
+    ViewData["Title"] = "Statement";
+}
+
+<h4>Statement</h4>
+<hr />
+
+<div class="input-group mb-3" style="display:flex; justify-content:end;">
+    <ejs-datepicker id="fromDate"
+                    placeholder="From" floatLabelType="Always"
+                    format="MMM-dd-yy" style="margin-right:5px;"></ejs-datepicker>
+    <ejs-datepicker id="toDate"
+                    placeholder="To" floatLabelType="Always"
+                    format="MMM-dd-yy" style="margin-right:5px;"></ejs-datepicker>
+    <button class="btn btn-primary" id="searchBtn" style="margin-top:10px; margin-right:10px">Search</button>
+    <button class="btn btn-secondary" id="printBtn" style="margin-top:10px">Print</button>
+</div>
+
+<div id="transactionTableContainer">
+
+</div>
+
+<div id="printTable">
+
+</div>
+<script> 
+    document.getElementById("searchBtn").addEventListener("click", function () {
+        var fromDate = document.getElementById("fromDate").value;
+        var toDate = document.getElementById("toDate").value;
+
+        fetch(`/Transaction/Search?fromDate=${fromDate}&toDate=${toDate}`)
+            .then(response => response.json())
+            .then(data => {
+                renderTransactionTable(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+
+    function renderTransactionTable(transactions) {
+        var tableHtml = '<table class="table table-bordered" style="color: #fff; align-items:center; font-size:14px;"><thead><tr><th>Transaction ID</th><th>Amount</th><th>Note</th><th>Date</th></tr></thead><tbody>';
+
+        transactions.forEach(function (transaction) {
+            tableHtml += `<tr><td>${transaction.transactionId}</td><td>${transaction.amount}</td><td>${transaction.note}</td><td>${transaction.date}</td></tr>`;
+        });
+
+        tableHtml += '</tbody></table>';
+
+        document.getElementById("transactionTableContainer").innerHTML = tableHtml;
+    }
+
+    document.getElementById("printBtn").addEventListener("click", function () {
+        var printContent = document.getElementById("transactionTableContainer").innerHTML;
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+    });
+</script>

@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Expense_Tracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Expense_Tracker.styles.css" asp-append-version="true" />
+    <link href="https://cdn.syncfusion.com/ej2/23.1.36/bootstrap5-dark.css" rel="stylesheet" />
+@*     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/23.1.36/material.css" /> *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Expense_Tracker.styles.css" asp-append-version="true" />
+    <script src="https://cdn.syncfusion.com/ej2/23.1.36/dist/ej2.min.js"></script>
+</head>
+<body class="e-bigger">
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <div class="nav_list"> 
+                    <a class="nav_link" asp-controller="Transaction" asp-action="Create">
+                        <i class='bx bx-grid-alt nav_icon' style="background-color:#fff;"></i> 
+                        <span class="nav_name">Home</span> 
+                    </a> 
+                    <a class="nav_link" asp-controller="Transaction" asp-action="Index"> 
+                        <i class='bx bx-user nav_icon'></i> 
+                        <span class="nav_name">Transactions</span> 
+                    </a> 
+                    <a class="nav_link" asp-controller="Transaction" asp-action="Statement">
+                        <i class='bx bx-message-square-detail nav_icon'></i> 
+                        <span class="nav_name">Statement</span> 
+                    </a> 
+                    <a asp-controller="Category" asp-action="Create" class="nav_link">
+                        <i class='bx bx-bookmark nav_icon'></i> 
+                        <span class="nav_name">Add Category</span> 
+                    </a> 
+                    <a asp-controller="Category" asp-action="Index" class="nav_link">
+                        <i class='bx bx-folder nav_icon'></i> 
+                        <span class="nav_name">Categories</span> 
+                    </a>
+                    <a asp-controller="Transaction" asp-action="Logout" class="nav_link">
+                        <i class='bx bx-folder nav_icon'></i>
+                        <span class="nav_name">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+@*     <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Expense_Tracker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header> *@
+    <div class="container">
+        <main role="main" class="pb-3" style="padding-left:200px;">
+            @RenderBody()
+        </main>
+    </div>
+
+@*     <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Expense_Tracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <ejs-scripts></ejs-scripts>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            const showNavbar = (toggleId, navId, bodyId, headerId) => {
+                const toggle = document.getElementById(toggleId),
+                    nav = document.getElementById(navId),
+                    bodypd = document.getElementById(bodyId),
+                    headerpd = document.getElementById(headerId)
+
+
+                if (toggle && nav && bodypd && headerpd) {
+                    toggle.addEventListener('click', () => {
+
+                        nav.classList.toggle('show')
+
+                        toggle.classList.toggle('bx-x')
+
+                        bodypd.classList.toggle('body-pd')
+
+                        headerpd.classList.toggle('body-pd')
+                    })
+                }
+            }
+
+            showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+            /*===== LINK ACTIVE =====*/
+            const linkColor = document.querySelectorAll('.nav_link')
+
+            function colorLink() {
+                if (linkColor) {
+                    linkColor.forEach(l => l.classList.remove('active'))
+                    this.classList.add('active')
+                }
+            }
+            linkColor.forEach(l => l.addEventListener('click', colorLink))
+        });
+    </script>
+</body>
+</html>

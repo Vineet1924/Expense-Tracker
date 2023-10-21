@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Expense_Tracker.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="mb-3" style="margin-left:50px;">Transactions</h1>
+<hr style="margin-left:50px;" />
+
+<p>
+    <a asp-action="Create"><button class="btn-primary" style="width: 1050px; margin-left:50px; border-radius: 5px; border: none; font-size: 17px; padding:8px"> + New Transaction </button></a>
+</p>
+<div class="table-responsive" style="padding-left:50px;">
+    <table class="table table-bordered" style="color: #fff; align-items:center; font-size:14px;">
+        <thead class="thead-dark">
+        <tr>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th style="text-align: center;">
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th style="text-align: center;"> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td style="text-align: center;">
+                @Html.DisplayFor(modelItem => item.Category.Title)
+            </td>
+            <td style="text-align: center;">
+                        
+                        <span style="background-color: @(item.Category.Type == "Income" ? "#28a745" : "#dc3545"); color: #fff; padding: 6px 12px; border-radius: 5px; font-size:18px;">
+                            ₹
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </span>
+            </td>
+            <td style="text-align: center;">
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td style="text-align: center;">
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+                <td style="text-align: center;">
+                    <a asp-action="Edit" asp-route-id="@item.TransactionId"><button class="btn-success" style="width: 30%; border-radius: 5px; border: none; font-size: 17px; padding:4px"> Edit </button></a> |
+                    <a asp-action="Details" asp-route-id="@item.TransactionId"><button class="btn-primary" style="width: 30%; border-radius: 5px; border: none; font-size: 17px; padding:4px"> Details </button></a> |
+                    <a asp-action="Delete" asp-route-id="@item.TransactionId"><button class="btn-danger" style="width: 30%; border-radius: 5px; border: none; font-size: 17px; padding:4px"> Delete </button></a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
